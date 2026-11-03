@@ -397,7 +397,7 @@ async function handleConfirmDelete() {
     await deleteUser(id);
 
     // 2. Cập nhật state cục bộ ngay lập tức để cập nhật UI
-    state.users = state.users.filter(u => u.id !== id);
+    state.users = state.users.filter(u => Number(u.id) !== Number(id));
 
     // 3. Render lại giao diện
     render();
@@ -437,9 +437,9 @@ async function handleFormSubmit(e) {
       const updatedUser = await updateUser(id, userData);
 
       // Cập nhật dữ liệu trong mảng cục bộ
-      const index = state.users.findIndex(u => u.id === id);
+      const index = state.users.findIndex(u => Number(u.id) === Number(id));
       if (index !== -1) {
-        state.users[index] = { ...state.users[index], ...updatedUser };
+        state.users[index] = { ...state.users[index], ...userData, ...updatedUser };
       }
 
       render();
